@@ -15,8 +15,6 @@ export default class HelloWorldViewModel {
     }, this, 'value');
 
     shouter.subscribe((values: Array<Object>) => {
-      //Push into obserableArray
-      console.log(values);
       this.items(values);
     }, this, 'items');
     

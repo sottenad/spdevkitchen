@@ -6,7 +6,8 @@ import {
   IPropertyPaneFieldType,
   HostType
 } from '@ms/sp-client-platform';
-import { DisplayMode } from '@ms/sp-client-base';
+
+import { DisplayMode, IHttpClientOptions } from '@ms/sp-client-base';
 import HelloWorldViewModel from './HelloWorldViewModel';
 import * as ko from 'knockout';
 
@@ -18,8 +19,11 @@ export interface IHelloWorldWebPartProps {
   value: number;
 }
 
-export interface ISPLists {
-  value: ISPList[];
+export interface ISPLocationList{
+  Name: string,
+  Lat: string,
+  Long: string,
+  Weather: Object
 }
 
 export interface ISPList {
@@ -27,15 +31,20 @@ export interface ISPList {
   Id: string;
 }
 
+
 let _instance: number = 0;
 
 export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorldWebPartProps> {
   private _sampleElement: HTMLElement;
   private _id: number;
+  private digestValue: string;
   private description: KnockoutObservable<string> = ko.observable('');
   private value: KnockoutObservable<number> = ko.observable(0);
   private shouter: KnockoutSubscribable<{}> = new ko.subscribable();
   private listItems: KnockoutObservableArray<Object> = ko.observableArray();
+  private appId: string = "0943023b-e000-4d87-b73b-43b369839868";
+  private appPassword: string = "6tXiP279kbRq3HZLkOaKBdY";
+  
 
 
   public constructor(context: IWebPartContext) {
@@ -55,7 +64,6 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     });
 
     this.listItems.subscribe((newValue: Object) => {
-      console.log('found update');
       this.shouter.notifySubscribers(newValue, 'items');
     });
   }
@@ -64,6 +72,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     this.description(this.properties.description);
     this.value(this.properties.value);
     this._renderListAsync();
+    
   }
 
   private _createComponentElement(tagName: string): HTMLElement {
@@ -110,21 +119,22 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     };
   }
 
-  private _getMockListData(): Promise<ISPLists> {
-    return MockHttpClient.get(this.host.pageContext.webAbsoluteUrl).then(() => {
-      const listData: ISPLists = {
-        value:
-        [
-          { Title: 'Mock List 1', Id: '1' },
-          { Title: 'Mock List 2', Id: '2' },
-          { Title: 'Mock List 3', Id: '3' }
-        ]
-      };
+  private _getLocationData(): Promise<ILatLong> {
+    //return this.host.httpClient.get(this.host.pageContext.webAbsoluteUrl + `/_api/web/lists?$filter=Hidden eq false`)
+    let start_datetime = new Date();
+    let end_datetime = new Date();
+    end_datetime.setDate(end_datetime.getDate() + 7);
+    console.log([start_datetime, end_datetime]);
+    console.log(this.digestValue);
 
-      return listData;
-    }) as Promise<ISPLists>;
+    /*
+          dataType: "json",
+        headers: {
+            Accept: "application/json;odata.metadata=minimal;odata.streaming=true",
+            'Authorization': "Bearer " + token
+        }
+        */
   }
-
 
   private _getListData(): Promise<ISPLists> {
     return this.host.httpClient.get(this.host.pageContext.webAbsoluteUrl + `/_api/web/lists?$filter=Hidden eq false`)
@@ -147,6 +157,22 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
         .then((response) => {
           this._renderList(response.value);
         });
+      this._getCalendarData()
+        .then((response) => {
+          console.log(response);
+        });
+      // Classic SharePoint environment      
+    } else if (this.host.hostType == HostType.ClassicPage) {
+
+      this._getListData()
+        .then((response) => {
+          this._renderList(response.value);
+        });
+
+      this._getCalendarData()
+        .then((response) => {
+          console.log(response);
+        });
     }
   }
 
@@ -154,10 +180,11 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
 
     this.listItems.removeAll();
     items.forEach((item: ISPList) => {
-        console.log(item);
-        this.listItems.push(item);
+      this.listItems.push(item);
     });
-    
+
 
   }
-}
+
+
+  }
