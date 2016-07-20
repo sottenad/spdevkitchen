@@ -1,0 +1,6 @@
+{
+  "workingDir": "./deploy/",
+  "account": "devkitchen",
+  "container": "steveo-helloworld",
+  "accessKey": "56PlUYQQwcI4HO9uN3oSldThBPLLEYo+NiO/p1EjCkz1+ZYhMHZJzMTDDSIdQN4zuu6zlnklRkZv4A18lLgTEw=="
+}

@@ -1,0 +1,20 @@
+{
+  "entries": [
+    {
+      "entry": "./lib/webparts/helloWorld/HelloWorldWebPart.js",
+      "manifest": "./src/webparts/helloWorld/HelloWorldWebPart.manifest.json",
+      "outputPath": "./dist/hello-world.bundle.js",
+      "configPath": "./dist/hello-world.config.js"
+    }
+  ],
+  "externals": {
+    "@ms/odsp-utilities-bundle": "node_modules/@ms/odsp-utilities-bundle/dist/odsp-utilities-bundle.js",
+    "@ms/office-ui-fabric-react": "node_modules/@ms/office-ui-fabric-react/dist/office-ui-fabric-react.js",
+    "@ms/sp-client-base": "node_modules/@ms/sp-client-base/dist/sp-client-base.js",
+    "@ms/sp-client-platform": "node_modules/@ms/sp-client-platform/dist/sp-client-platform.js",
+    "@ms/sp-lodash": "node_modules/@ms/sp-lodash/dist/sp-lodash.js",
+    "react": "node_modules/react/dist/react.min.js",
+    "react-dom": "node_modules/react-dom/dist/react-dom.min.js",
+    "react-dom/server": "node_modules/react-dom/dist/react-dom-server.min.js"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "helloworld",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "@ms/sp-client-base": "~0.1.5",
+    "@ms/sp-client-platform": "~0.1.6",
+    "knockout": "3.4.0"
+  },
+  "devDependencies": {
+    "@ms/ms-core-build": "~0.4.27",
+    "@ms/npmx": "~0.4.9",
+    "@ms/sp-modules-common": "~0.1.5",
+    "@ms/sp-webpart-workbench": "~0.1.6",
+    "gulp": "~3.9.1",
+    "load-themed-styles": "~1.1.0"
+  },
+  "scripts": {
+    "build": "gulp bundle",
+    "clean": "gulp nuke",
+    "test": "gulp test"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "solution": {
+    "name": "steveo-helloworld-client-side-solution",
+    "id": "9524853e-c5ab-4812-859a-62247af01f86",
+    "version": "1.0.0.0"
+  },
+  "paths": {
+    "manifestsMatch": "dist/**/*.manifest.json",
+    "zippedPackage": "steveo-helloworld.app"
+  }
+}

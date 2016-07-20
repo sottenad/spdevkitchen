@@ -1,0 +1,4 @@
+{
+  "shouldWrapProductionManifestForManifestServer": false,
+  "cdnBasePath": "https://devkitchen.blob.core.windows.net/steveo-helloworld/deploy/"
+}

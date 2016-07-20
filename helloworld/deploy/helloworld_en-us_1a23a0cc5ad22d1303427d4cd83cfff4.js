@@ -1,0 +1,1 @@
+define([],function(){var e={_Eb502yUUNm2HFFxu4po4YA:{PropertyPaneDescription:"Manage the HelloWorld webpart settings.",BasicGroupName:"Basic",DescriptionFieldLabel:"Description"}};return e["default"]=e,e});

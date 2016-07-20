@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../node_modules/@ms/sp-modules-common/lib/manifestSchemas/jsonSchemas/clientSideComponentManifestSchema.json",
+
+  "id": "90548787-53e8-44ac-94d5-532565aa165c",
+  "componentType": "WebPart",
+  "version": "0.0.1",
+  "manifestVersion": 2,
+
+  "preconfiguredEntries": [{
+    "groupId": "90548787-53e8-44ac-94d5-532565aa165c",
+    "group": { "default": "Under Development" },
+    "title": { "default": "SteveoHelloWorld" },
+    "description": { "default": "HelloWorld description" },
+    "officeFabricIconFontName": "Page",
+    "properties": {
+      "description": "Steveo Hello World",
+      "value": 15
+    }
+  }]
+}
