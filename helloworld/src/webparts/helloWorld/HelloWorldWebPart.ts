@@ -45,10 +45,6 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   private value: KnockoutObservable<number> = ko.observable(0);
   private shouter: KnockoutSubscribable<{}> = new ko.subscribable();
   private listItems: KnockoutObservableArray<Object> = ko.observableArray();
-  private appId: string = "0943023b-e000-4d87-b73b-43b369839868";
-  private appPassword: string = "6tXiP279kbRq3HZLkOaKBdY";
-  
-
 
   public constructor(context: IWebPartContext) {
     super(context);
@@ -130,10 +126,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
       });
   }
 
-
-
   private _renderListAsync(): void {
-
 
      if (this.host.hostType === HostType.ModernPage) {
       this._getLocationData()
