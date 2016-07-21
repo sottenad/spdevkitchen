@@ -6,10 +6,15 @@ export default class HelloWorldViewModel {
   public items: KnockoutObservableArray<any> = ko.observableArray();
   public selectedItem: KnockoutObservable<any> = ko.observable();
   public events: KnockoutObservableArray<any> = ko.observableArray();
+  public currentTime: KnockoutObservable<string> = ko.observable('');
+
+  
+
   public selectedEvents = ko.computed(() => {
     console.log(ko.unwrap(this.events));
     return ko.unwrap(this.events).filter((event) => {
       if (this.selectedItem() != undefined) {
+        console.log(this.selectedItem())
         return event.OfficeId == ko.unwrap(this.selectedItem).Id;
       }
       else {
@@ -17,6 +22,7 @@ export default class HelloWorldViewModel {
       }
     });
   });
+
 
 
   public getUserLocation(): void {
@@ -30,6 +36,11 @@ export default class HelloWorldViewModel {
     // Default to Washington, DC
     else
       this.nearestItem(38.8951, -77.0367);
+  }
+
+  public setTime():void {
+    var date:Date = new Date();
+    this.currentTime(date.getHours() + ':' + date.getMinutes() )
   }
 
   private nearestItem(latitude, longitude): any {
@@ -91,5 +102,7 @@ export default class HelloWorldViewModel {
     this.selectedItem.subscribe((newValue) => {
       this.events
     });
+
+    this.setTime();
   }
 }
