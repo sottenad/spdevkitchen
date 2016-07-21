@@ -5,60 +5,87 @@
   </ul>
 </div>
 
-<div class="ms-Grid"> 
-    <div class="ms-Grid-row ms-bgColor-themeSecondary">
-        <div class="ms-Grid-col ms-u-lg4 ms-u-slideLeftIn10 "><img src="https://a830edad9050849spdk3033.sharepoint.com/sites/devkitchen/Images1/bravern.jpg" /></div>
-        <div class="ms-Grid-col ms-u-lg8 ms-u-slideLeftIn10">Bellevue, WA</div>
+<div class="ms-Grid helloWorld">
+  <div class="ms-Grid-row ms-bgColor-themeDarker header">
+    <div class="ms-Grid-col ms-u-lg12 ms-u-fadeIn500 ">
+      <img class="ms-borderColor-themeLighter locationImage" src="https://a830edad9050849spdk3033.sharepoint.com/sites/devkitchen/Images1/bravern.jpg"/>
+      <div class="locationTitle ms-font-su ms-fontColor-white">Bellevue, WA</div>
     </div>
-    <div class="ms-Grid-row">
-        <div class="ms-Grid-col ms-u-lg6">
-          <span class="weather icon">Weather Icon</span><br />
-          <span>72&deg;</span>
-        </div>
-        <div class="ms-Grid-col ms-u-lg6">
-          <span class="Time">10:22 <small>am</small></span>
-        </div>
+  </div>
+  <div class="ms-Grid-row">
+    <div class="ms-Grid-col ms-u-lg6">
+      <span class="weather icon">Weather Icon</span><br />
+      <span>72&deg;</span>
     </div>
-    <div class="ms-Grid-row">
-      <div class="ms-Grid-col ms-u-lg12">
-        <h3>Events</h3>
-      </div>
+    <div class="ms-Grid-col ms-u-lg6">
+      <span class="Time">10:22 <small>am</small></span>
     </div>
-    <div class="ms-Grid-row">
-      <div class="ms-Grid-col ms-u-lg12">
-        
-        <ul>
-          <li>
-            <div class="ms-Grid-col ms-u-lg8">
+  </div>
+  <div class="ms-Grid-row">
+    <div class="ms-Grid-col ms-u-lg12">
+      <h3>Events</h3>
+    </div>
+  </div>
+  <div class="ms-Grid-row">
+    <div class="ms-Grid-col ms-u-lg12">
+
+      <ul>
+        <li>
+          <div class="ms-Grid-col ms-u-lg8">
             <strong>SharePoint Dev Kitchen</strong>
             <p>Join 64 developers hacking on the new SharePoint Framework.</p>
-            </div>
-            <div class="ms-Grid-col ms-u-lg4">
-              <span>Today</span>
-              <small>9:00</small> - <small>4:00</small>
-            </div>
-          </li>
-          <li>
-            <div class="ms-Grid-col ms-u-lg8">
+          </div>
+          <div class="ms-Grid-col ms-u-lg4">
+            <span>Today</span>
+            <small>9:00</small> - <small>4:00</small>
+          </div>
+        </li>
+        <li>
+          <div class="ms-Grid-col ms-u-lg8">
             <strong>Cafe Hour</strong>
             <p>Coffee and snacks in Cafe Flara.</p>
-            </div>
-            <div class="ms-Grid-col ms-u-lg4">
-              <span>Today</span>
-              <small>12:00</small> - <small>1:30</small>
-            </div>
-          </li>
-        </ul>
-      </div>
+          </div>
+          <div class="ms-Grid-col ms-u-lg4">
+            <span>Today</span>
+            <small>12:00</small> - <small>1:30</small>
+          </div>
+        </li>
+      </ul>
     </div>
-    <div class="ms-Grid-row">
-      <div class="ms-Grid-col ms-u-lg4">
-        <h3>Network</h3>
-      </div>
-      <div class="ms-Grid-8">
-          <h4>MSGuest</h4>
-          <h5>Pass@word1!</h5>
-      </div>
+  </div>
+  <div class="ms-Grid-row">
+    <div class="ms-Grid-col ms-u-lg4">
+      <h3>Network</h3>
     </div>
-    
+    <div class="ms-Grid-8">
+      <h4>MSGuest</h4>
+      <h5>Pass@word1!</h5>
+    </div>
+  </div>
+
 </div>
+
+
+
+<style>
+  .locationImage {
+    max-height: 80px;
+    max-width: 80px;
+    border-radius: 50px;
+    border-width: 1px;
+    border-style: solid;
+    margin:0 10px 0 0;
+    float:left;
+  }
+
+  .locationTitle{
+    vertical-align:middle;
+    line-height:80px;
+    margin-left:30px;
+    float:left;
+  }
+  
+  .header {
+    padding: 20px;
+  }
+</style>
