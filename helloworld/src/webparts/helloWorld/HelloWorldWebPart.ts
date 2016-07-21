@@ -10,7 +10,7 @@ import {
 import { DisplayMode } from '@ms/sp-client-base';
 import HelloWorldViewModel from './HelloWorldViewModel';
 import * as ko from 'knockout';
-import * as weather from 'weather-icons';
+
 import MockHttpClient from './tests/MockHttpClient';
 import strings from './loc/Strings.resx';
 
