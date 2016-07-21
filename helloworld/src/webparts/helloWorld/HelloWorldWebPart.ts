@@ -35,7 +35,14 @@ export interface ISPList {
   Title: string;
   Id: string;
 };
-
+export interface ISPEvent {
+  Title: string;
+  Location: string;
+  Office: any;
+}
+export interface ISPEventListItems {
+  value: Array<ISPEvent>;
+}
 let _instance: number = 0;
 
 export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorldWebPartProps> {
@@ -46,6 +53,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   private value: KnockoutObservable<number> = ko.observable(0);
   private shouter: KnockoutSubscribable<{}> = new ko.subscribable();
   private listItems: KnockoutObservableArray<Object> = ko.observableArray();
+  private events: KnockoutObservableArray<any> = ko.observableArray();
 
   public constructor(context: IWebPartContext) {
     super(context);
@@ -66,6 +74,10 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     this.listItems.subscribe((newValue: Object) => {
       this.shouter.notifySubscribers(newValue, 'items');
     });
+
+    this.events.subscribe((newValue: any) => {
+    this.shouter.notifySubscribers(newValue, 'events');
+  });
   }
 
   public render(mode: DisplayMode = DisplayMode.Read, data?: IWebPartData): void {
@@ -117,6 +129,13 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     };
   }
 
+  private _getEvents(): Promise<any> {
+  return this.host.httpClient.get(this.host.pageContext.webAbsoluteUrl + "/_api/web/lists(guid'A4F31792-99B2-4D95-8877-688C7F80CB47')/items")
+    .then((response: Response) => {
+    return response.json();
+  });
+}
+
   private _getLocationData(): Promise<ISPLocationListItems> {
 
     return this.host.httpClient.get(this.host.pageContext.webAbsoluteUrl + "/_api/web/lists(guid'943aaa60-dcea-4817-a4a7-41d05efbcde5')/items")
@@ -126,7 +145,13 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
   }
 
   private _renderListAsync(): void {
+    this._getEvents().then((eventsRepsonse: ISPEventListItems) => {
+      this.events.removeAll();
+      eventsRepsonse.value.forEach(element => {
+        this.events.push(element);
+      });
      if (this.host.hostType === HostType.ModernPage) {
+
       this._getLocationData()
         .then((response) => {
 
@@ -140,6 +165,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
           this._renderList(response);
         });
     }
+    });
   }
 
   private _renderList(items: ISPLocationListItems): void {

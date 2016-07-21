@@ -5,6 +5,19 @@ export default class HelloWorldViewModel {
   private fontSize: KnockoutObservable<number> = ko.observable(15);
   public items: KnockoutObservableArray<any> = ko.observableArray();
   public selectedItem: KnockoutObservable<any> = ko.observable();
+  public events: KnockoutObservableArray<any> = ko.observableArray();
+  public selectedEvents = ko.computed(() => {
+    console.log(ko.unwrap(this.events));
+    return ko.unwrap(this.events).filter((event) => {
+      if (this.selectedItem() != undefined) {
+        return event.OfficeId == ko.unwrap(this.selectedItem).Id;
+      }
+      else {
+        return false;
+      }
+    });
+  });
+
 
   public getUserLocation(): void {
 
@@ -23,7 +36,7 @@ export default class HelloWorldViewModel {
     var mindif = 99999;
     var closest;
     let cities = ko.unwrap(this.items);
-console.log(cities);
+    console.log(cities);
 
     for (let index = 0; index < cities.length; ++index) {
       var dif = this.PythagorasEquirectangular(latitude, longitude, cities[index].Latitude, cities[index].Longitude);
@@ -69,5 +82,14 @@ console.log(cities);
         this.getUserLocation();
       }
     }, this, 'itemsLoaded');
+
+    shouter.subscribe((value: Array<any>) => {
+      this.events(value);
+    }, this, 'events');
+
+
+    this.selectedItem.subscribe((newValue) => {
+      this.events
+    });
   }
 }
