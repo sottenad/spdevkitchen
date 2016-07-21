@@ -14,6 +14,7 @@ import * as ko from 'knockout';
 import MockHttpClient from './tests/MockHttpClient';
 import strings from './loc/Strings.resx';
 
+
 export interface IHelloWorldWebPartProps {
   description: string;
   value: number;
