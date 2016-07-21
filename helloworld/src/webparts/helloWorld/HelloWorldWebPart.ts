@@ -7,7 +7,7 @@ import {
   HostType
 } from '@ms/sp-client-platform';
 
-import { DisplayMode, IHttpClientOptions } from '@ms/sp-client-base';
+import { DisplayMode } from '@ms/sp-client-base';
 import HelloWorldViewModel from './HelloWorldViewModel';
 import * as ko from 'knockout';
 
@@ -20,6 +20,10 @@ export interface IHelloWorldWebPartProps {
 }
 
 export interface ISPLocationList{
+  items: ISPLocationListItem[]
+}
+
+export interface ISPLocationListItem{
   Name: string,
   Lat: string,
   Long: string,
@@ -30,7 +34,6 @@ export interface ISPList {
   Title: string;
   Id: string;
 }
-
 
 let _instance: number = 0;
 
@@ -119,67 +122,38 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     };
   }
 
-  private _getLocationData(): Promise<ILatLong> {
-    //return this.host.httpClient.get(this.host.pageContext.webAbsoluteUrl + `/_api/web/lists?$filter=Hidden eq false`)
-    let start_datetime = new Date();
-    let end_datetime = new Date();
-    end_datetime.setDate(end_datetime.getDate() + 7);
-    console.log([start_datetime, end_datetime]);
-    console.log(this.digestValue);
-
-    /*
-          dataType: "json",
-        headers: {
-            Accept: "application/json;odata.metadata=minimal;odata.streaming=true",
-            'Authorization': "Bearer " + token
-        }
-        */
-  }
-
-  private _getListData(): Promise<ISPLists> {
-    return this.host.httpClient.get(this.host.pageContext.webAbsoluteUrl + `/_api/web/lists?$filter=Hidden eq false`)
+  private _getLocationData(): Promise<ISPLocationList> {
+    return this.host.httpClient.get(this.host.pageContext.webAbsoluteUrl + '/_api/web/lists/GetByTitle("OfficeLocations")')
       .then((response: Response) => {
+        console.log(response.json());
         return response.json();
       });
   }
 
+
+
   private _renderListAsync(): void {
 
-    // Test environment
-    if (this.host.hostType === HostType.TestPage) {
-      this._getMockListData().then((response) => {
-        this._renderList(response.value);
-      });
 
-      // SharePoint environment
-    } else if (this.host.hostType === HostType.ModernPage) {
-      this._getListData()
+     if (this.host.hostType === HostType.ModernPage) {
+      this._getLocationData()
         .then((response) => {
-          this._renderList(response.value);
-        });
-      this._getCalendarData()
-        .then((response) => {
-          console.log(response);
+          this._renderList(response.items);
         });
       // Classic SharePoint environment      
     } else if (this.host.hostType == HostType.ClassicPage) {
 
-      this._getListData()
+      this._getLocationData()
         .then((response) => {
-          this._renderList(response.value);
-        });
-
-      this._getCalendarData()
-        .then((response) => {
-          console.log(response);
+          this._renderList(response.items);
         });
     }
   }
 
-  private _renderList(items: ISPList[]): void {
+  private _renderList(items: ISPLocationListItem[]): void {
 
     this.listItems.removeAll();
-    items.forEach((item: ISPList) => {
+    items.forEach((item: ISPLocationListItem) => {
       this.listItems.push(item);
     });
 
