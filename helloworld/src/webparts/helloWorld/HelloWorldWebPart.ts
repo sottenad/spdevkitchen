@@ -26,7 +26,9 @@ export interface ISPLocationListItems{
 
 export interface ISPLocationListItem{
   Title: string,
-  Id: string
+  Id: string,
+  latitude: string,
+  longitude: string
 };
 
 export interface ISPList {
@@ -127,10 +129,10 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
      if (this.host.hostType === HostType.ModernPage) {
       this._getLocationData()
         .then((response) => {
-          
+
           this._renderList(response);
         });
-      // Classic SharePoint environment      
+      // Classic SharePoint environment
     } else if (this.host.hostType == HostType.ClassicPage) {
 
       this._getLocationData()
@@ -147,6 +149,7 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     items.value.forEach((item: ISPLocationListItem) => {
       this.listItems.push(item);
     });
+    this.shouter.notifySubscribers({},"itemsLoaded");
 
   }
 }
