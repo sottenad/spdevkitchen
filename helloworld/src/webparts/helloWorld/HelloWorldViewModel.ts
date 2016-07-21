@@ -32,7 +32,7 @@ console.log(cities);
         mindif = dif;
       }
     }
-
+    this.selectedItem(cities[closest]);
     // echo the nearest city
     console.log(cities[closest]);
   }
