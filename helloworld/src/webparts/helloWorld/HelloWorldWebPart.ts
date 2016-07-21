@@ -19,21 +19,19 @@ export interface IHelloWorldWebPartProps {
   value: number;
 }
 
-export interface ISPLocationList{
-  items: ISPLocationListItem[]
-}
+export interface ISPLocationListItems{
+  value: ISPLocationListItem[]
+};
 
 export interface ISPLocationListItem{
-  Name: string,
-  Lat: string,
-  Long: string,
-  Weather: Object
-}
+  Title: string,
+  Id: string
+};
 
 export interface ISPList {
   Title: string;
   Id: string;
-}
+};
 
 let _instance: number = 0;
 
@@ -71,7 +69,6 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     this.description(this.properties.description);
     this.value(this.properties.value);
     this._renderListAsync();
-    
   }
 
   private _createComponentElement(tagName: string): HTMLElement {
@@ -90,7 +87,6 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
       });
 
   }
-
 
   protected get propertyPaneSettings(): IPropertyPaneSettings {
     return {
@@ -118,40 +114,38 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorld
     };
   }
 
-  private _getLocationData(): Promise<ISPLocationList> {
-    return this.host.httpClient.get(this.host.pageContext.webAbsoluteUrl + '/_api/web/lists/GetByTitle("OfficeLocations")')
-      .then((response: Response) => {
-        console.log(response.json());
-        return response.json();
-      });
+  private _getLocationData(): Promise<ISPLocationListItems> {
+
+    return this.host.httpClient.get(this.host.pageContext.webAbsoluteUrl + "/_api/web/lists(guid'943aaa60-dcea-4817-a4a7-41d05efbcde5')/items")
+        .then((response: Response) => {
+          return response.json();
+        });
   }
 
   private _renderListAsync(): void {
-
      if (this.host.hostType === HostType.ModernPage) {
       this._getLocationData()
         .then((response) => {
-          this._renderList(response.items);
+          
+          this._renderList(response);
         });
       // Classic SharePoint environment      
     } else if (this.host.hostType == HostType.ClassicPage) {
 
       this._getLocationData()
         .then((response) => {
-          this._renderList(response.items);
+          this._renderList(response);
         });
     }
   }
 
-  private _renderList(items: ISPLocationListItem[]): void {
+  private _renderList(items: ISPLocationListItems): void {
 
     this.listItems.removeAll();
-    items.forEach((item: ISPLocationListItem) => {
+    console.log(items);
+    items.value.forEach((item: ISPLocationListItem) => {
       this.listItems.push(item);
     });
 
-
   }
-
-
-  }
+}
